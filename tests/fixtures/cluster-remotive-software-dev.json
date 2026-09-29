@@ -1,0 +1,18 @@
+{
+  "job-count": 1,
+  "jobs": [
+    {
+      "id": 990001,
+      "url": "https://remotive.com/remote-jobs/software-development/senior-backend-engineer-990001",
+      "title": "Senior Backend Engineer",
+      "company_name": "Nordic Labs",
+      "category": "Software Development",
+      "tags": ["typescript", "node", "graphql"],
+      "job_type": "full_time",
+      "publication_date": "2026-07-16T08:00:00",
+      "candidate_required_location": "Europe",
+      "salary": "€90,000 - €110,000 per year",
+      "description": "<p>Short Remotive blurb for Node.js and GraphQL. Fully remote within Europe.</p><p>Apply: <a href=\"https://careers.nordiclabs.example/jobs/senior-backend\">careers.nordiclabs.example</a></p>"
+    }
+  ]
+}

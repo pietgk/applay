@@ -1,0 +1,49 @@
+/* Locked 1-page CV stylesheet — ATS-safe: single column, no tables/images,
+   standard fonts, text stays selectable. Tune only --scale to fit one page. */
+@page {
+  size: A4;
+  margin: 12mm 14mm 10mm 14mm;
+}
+:root { --scale: 1.0; }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  font-size: calc(9.4pt * var(--scale));
+  line-height: 1.28;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+h1 {
+  font-size: calc(17pt * var(--scale));
+  margin: 0 0 1px 0;
+  letter-spacing: 0.3px;
+}
+.headline { font-size: calc(9.6pt * var(--scale)); font-weight: 600; color: #333; margin: 0 0 2px 0; }
+.contact  { font-size: calc(8.6pt * var(--scale)); color: #444; margin: 0 0 8px 0; }
+.contact a { color: #444; text-decoration: none; }
+
+h2 {
+  font-size: calc(9.6pt * var(--scale));
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: 1px solid #bbb;
+  padding-bottom: 2px;
+  margin: 9px 0 4px 0;
+}
+
+p { margin: 0 0 4px 0; }
+ul { margin: 2px 0 4px 0; padding-left: 15px; }
+li { margin: 0 0 2px 0; }
+
+.role { margin: 5px 0 2px 0; }
+.role .line1 { font-weight: 700; }
+.role .meta { font-weight: 400; color: #555; }
+.role .context { font-style: italic; color: #555; font-size: calc(8.8pt * var(--scale)); margin: 1px 0 2px 0; }
+
+.skills-line b { display: inline-block; min-width: 92px; }
+.muted { color: #555; }
+strong { font-weight: 700; }
+a { color: inherit; }

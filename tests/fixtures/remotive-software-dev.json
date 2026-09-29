@@ -1,0 +1,44 @@
+{
+  "job-count": 3,
+  "jobs": [
+    {
+      "id": 880001,
+      "url": "https://remotive.com/remote-jobs/software-development/senior-backend-engineer-880001",
+      "title": "Senior Backend Engineer",
+      "company_name": "Nordic Remote Labs",
+      "category": "Software Development",
+      "tags": ["typescript", "graphql", "node"],
+      "job_type": "full_time",
+      "publication_date": "2026-07-15T08:00:00",
+      "candidate_required_location": "Europe",
+      "salary": "€80,000 - €100,000 per year",
+      "description": "<p>Build <strong>Node.js</strong> and GraphQL services.\r\n\r\nFully remote within Europe. Permanent full-time role.</p>"
+    },
+    {
+      "id": 880002,
+      "url": "https://remotive.com/remote-jobs/software-development/staff-backend-engineer-880002",
+      "title": "Staff Backend Engineer",
+      "company_name": "US Only Remote Inc",
+      "category": "Software Development",
+      "tags": ["backend", "typescript", "node"],
+      "job_type": "full_time",
+      "publication_date": "2026-07-14T08:00:00",
+      "candidate_required_location": "USA Only",
+      "salary": "",
+      "description": "<p>Backend platform work with Node and TypeScript. Fully remote. Candidates must live in the USA.</p>"
+    },
+    {
+      "id": 880003,
+      "url": "https://remotive.com/remote-jobs/software-development/office-manager-880003",
+      "title": "Office Manager",
+      "company_name": "Admin Co",
+      "category": "Software Development",
+      "tags": ["admin"],
+      "job_type": "full_time",
+      "publication_date": "2026-07-13T08:00:00",
+      "candidate_required_location": "Worldwide",
+      "salary": "",
+      "description": "<p>Coordinate calendars and travel. Fully remote worldwide.</p>"
+    }
+  ]
+}

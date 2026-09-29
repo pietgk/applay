@@ -1,0 +1,50 @@
+{
+  "id": 48747976,
+  "title": "Ask HN: Who is hiring? (July 2026)",
+  "author": "whoishiring",
+  "created_at": "2026-07-01T15:01:21.000Z",
+  "type": "story",
+  "children": [
+    {
+      "id": 48750001,
+      "author": "nordic_hiring",
+      "created_at": "2026-07-01T16:00:00.000Z",
+      "type": "comment",
+      "text": "Nordic Labs | Senior Backend Engineer | REMOTE (EU) | Full-time<p>Build Node.js and GraphQL services with TypeScript. Architecture ownership and mentoring across the team.<p>Apply: <a href=\"https://nordiclabs.example/careers/backend\">https://nordiclabs.example/careers/backend</a>",
+      "children": [
+        {
+          "id": 48750099,
+          "author": "curious_dev",
+          "created_at": "2026-07-01T17:00:00.000Z",
+          "type": "comment",
+          "text": "Nested reply that looks like a job but must be ignored | Fake Role | REMOTE (EU)<p>Should never enter the catalog.",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 48750002,
+      "author": "us_only_co",
+      "created_at": "2026-07-01T16:10:00.000Z",
+      "type": "comment",
+      "text": "Stateside Labs | Staff Platform Engineer | USA Only | Full-time<p>Remote role. Node and distributed systems. Candidates must live in the USA.",
+      "children": []
+    },
+    {
+      "id": 48750003,
+      "author": "chatty",
+      "created_at": "2026-07-01T16:20:00.000Z",
+      "type": "comment",
+      "text": "Just chiming in to say this is a great thread this month. No hiring here.",
+      "children": []
+    },
+    {
+      "id": 48750004,
+      "author": "widgets",
+      "created_at": "2026-07-01T16:30:00.000Z",
+      "type": "comment",
+      "text": "Acme Widgets | Office Coordinator | REMOTE (worldwide)<p>Handle calendars, coffee, and travel booking. No engineering work.",
+      "children": []
+    }
+  ]
+}

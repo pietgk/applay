@@ -1,0 +1,31 @@
+{
+  "job-count": 2,
+  "jobs": [
+    {
+      "id": 880001,
+      "url": "https://remotive.com/remote-jobs/software-development/senior-backend-engineer-880001",
+      "title": "Senior Backend Engineer",
+      "company_name": "Nordic Remote Labs",
+      "category": "Software Development",
+      "tags": ["typescript", "graphql", "node", "llm"],
+      "job_type": "full_time",
+      "publication_date": "2026-07-15T08:00:00",
+      "candidate_required_location": "Europe",
+      "salary": "€80,000 - €100,000 per year",
+      "description": "<p>Build <strong>Node.js</strong> and GraphQL services.\r\n\r\nFully remote within Europe. Permanent full-time role. Also touches LLM tooling.</p>"
+    },
+    {
+      "id": 880010,
+      "url": "https://remotive.com/remote-jobs/artificial-intelligence/ai-engineer-880010",
+      "title": "AI Engineer",
+      "company_name": "Agentic EU",
+      "category": "Artificial Intelligence",
+      "tags": ["llm", "python", "mcp"],
+      "job_type": "contract",
+      "publication_date": "2026-07-16T09:00:00",
+      "candidate_required_location": "EMEA",
+      "salary": "$90 - $150 /hour",
+      "description": "<p>Build agentic LLM workflows with MCP. Fully remote across Europe.</p>"
+    }
+  ]
+}

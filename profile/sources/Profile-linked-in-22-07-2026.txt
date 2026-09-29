@@ -1,0 +1,432 @@
+# LinkedIn profile export (text)
+
+Source: `Profile-linked-in-22-07-2026.pdf`
+Exported/created: 2026-07-22 (LinkedIn “Resume generated from profile”)
+Extracted: flowing text (columns linearized; page footers removed)
+
+Use this to diff against `profile/master-profile.yaml` and `profile/sources/linkedin-profile.md`.
+Do not treat as SSOT — LinkedIn may be stale (e.g. Mindler still “Present”).
+
+---
+
+Contact
+Mäster Wångberg Väg 6
+69572 Röfors
+(mobile number omitted from the public copy)
+piet.groot.kormelink@gmail.com
+www.linkedin.com/in/pietgrootkormelink (LinkedIn)
+
+Top Skills
+Software Architecture
+Software Development
+Agile
+
+Languages
+German (Professional Working)
+English (Full Professional)
+Dutch (Native or Bilingual)
+
+Piet Groot Kormelink
+Technical Lead
+Stockholm, Stockholm County, Sweden
+
+Summary
+Curious senior Full-Stack Tech Lead, getting my energy from
+creating cool stuff with a great team for positive impact – using the
+latest AI tools to work smarter. What drives me is taking a complex
+domain, finding the one simple concept that makes everything click,
+and turning it into a solution that users understand in 5 minutes.
+From idea to architecture to production, with an agile and startup
+mindset. I coach teams, make technical decisions, and write code.
+Currently exploring the intersection of AI reasoning, deterministic
+systems, and human creativity – because the best solutions use
+each where they're strongest. React . React Native · TypeScript
+· .NET/C# · Python · AWS · Azure · AI-augmented development
+
+Certifications
+API Development in .NET with GraphQL
+
+Experience
+Mindler
+4 years 6 months
+
+Technical Lead
+
+March 2023 - Present (3 years 5 months)
+Stockholm, Stockholm County, Sweden
+Senior React-Native / FullStack Developer to create our Mindler App and
+TechLead to move our technical landscape into the future.
+
+Senior Software Developer
+
+February 2022 - Present (4 years 6 months)
+Stockholm Metropolitan Area
+
+TechBuddy
+Senior Developer at TechBuddy
+
+March 2021 - March 2022 (1 year 1 month)
+Stockholm, Stockholm County, Sweden
+Together with the team that creates TechBuddy we are Setting up a Team that
+is creating the Best Service System we can Envision for our Partners. This
+using the combined Experience of TechBuddy, the Teams and my previous
+experience creating ERP systems and Apps.
+
+Klarna
+Senior Developer
+
+October 2020 - March 2021 (6 months)
+Stockholm Metropolitan Area
+Together with the Personal Finance team, we create the bank and card tab in
+the Klarna App.
+This enables our users to get an aggregated overview of their financial
+situation.
+After getting familiar with the extensive front and back-end environment, i
+extended the transaction handling and introduced improvements to the testing
+environment.
+As a result the user experience is enhanced and the quality trust is improved.
+
+The Future Group
+Senior React-Native Developer
+
+May 2020 - October 2020 (6 months)
+Netherlands
+In the context of 2 startup ideas and updating my portfolio, using my
+experience, curiosity and research,
+i am creating a modern App development experience that combines Design for
+Change, Test Driven Development, Component based Development ideas and
+current best practices.
+We have started Story Mapping and writing the first of the Blogs on setting
+up the environment (Guidelines, Design&Docs, Front&Back-end, CI/CD,
+Infra&Compliance as code).
+Tech, Tools & Methods: Storybook, TDD, Design for change, Atomic
+Design, React-Native, Pulumi, Typescript, Rust, GraphQL, NextJS, MDX,
+Security(OpenID, OWASP), Accessibility(WCAG), DevOps, GitOps, Agile,
+Scrum.
+
+Nationale-Nederlanden
+Technical Architect
+
+January 2020 - May 2020 (5 months)
+Den Haag, South Holland, Netherlands
+NN started a new project combining new Open-Banking functionality with
+existing NNApp functionality into a new React-Native based App.
+
+The RetailApp team (where i was part of) is responsible for delivering the
+complete NNApp with all features, combined with the results of the Banking,
+Onboarding and Business Integration teams.
+My task was cooperating with all teams on finishing the architecture, and with
+the at first inexperienced team, delivering the first version of the RetailApp (1st
+feature).
+Task completed:
+As member of the Ready team (a combination of experts from each team)
+i created and defended ‘Architectural decision’ in the Architectural board
+meetings.
+Defined and implemented the React-Native/NodeJS/AWS environment
+together with the responsible teams to enable per business feature full stack
+development.
+Through a lot of cooperation, analysis and meetings, together with the banking
+team we where able to introduce GraphQL into the NN landscape. As result i
+delivered the first GraphQL internet-savings model MVP as AWS Lambda.
+Introduction of Storybook for Component based development and coaching the
+delivery of the components for the first Business feature internet-savings.
+Coached a junior lead-developer into finding the right spot for his career within
+NN.
+A Successful demo to the business owner of the first RetailApp business
+feature internet-savings concluded my job at NN.
+Tech, Tools & Methods:
+Component Structured Test Driven Development using Storybook
+Design for change, Design for security, Design for privacy, Atomic Design.
+React-Native, WiX react-native-lib-ui, typescript, Javascript.
+NodeJS, Apollo GraphQL stack, Rest, Agile, Scrum, AWS Lambda, Serverless
+(Cloud-Formation, VPC, API-Manager), Docker, Azure DevOps, CI/CD, Yarn,
+Prettier, ESLint, SonarQube, WSO2, Swagger, CloudFormation, Jest, Git,
+TDD, Xcode, VSCode, Android-Studio.
+
+Finner
+CTO
+
+August 2018 - December 2019 (1 year 5 months)
+The Randstad, Netherlands
+
+In cooperation with the owners of Finner, we created our own agile
+development team, step by step (Strangle pattern) we took over the existing
+externally developed solution by designing and implementing a new version of
+their fintech company analysis solution using:
+- Component based development (Storybook, React),
+- specification based test driven development (TDD),
+- and a Modern Azure DevOps CI/CD environment.
+
+Finner is now capable of maintaining and extending its complete B2C and B2B
+environment with a small, complete and modern Agile development process.
+
+In parallel we started research on security improvements.
+Cooperated with an enterprise level security solution matching the Finner
+context.
+Analysing a promising Distributed Ledger Technology (DLT) for extra security
+and privacy.
+
+Tech:
+- Component structured Test-Driven Development using Storybook.
+- React, Material-UI, Typescript, Html, CSS in JavaScript.
+- Asp.net, C#, EF, MS-SQL.
+- Web Security, OWASP, JWT
+- Agile, Scrum
+
+- Azure DevOps CI/CD.
+- Researching HoloChain & DAO & Rust environments.
+
+Mind4Simple
+Architect Developer
+
+January 2015 - August 2018 (3 years 8 months)
+Netherlands
+For Nowark Rengelink I architected a global mobile app architecture, using
+React-Native to enable producing fast and stable mobile Android and iOS
+apps.
+As Advisor for BeSite (Web-Sites, Shops & Marketing) I deliver experience,
+knowledge and support to implement an effective agile development
+environment (Agile, Scrum, KanBan).
+As lead iOS developer for Park-Mobile i helped them get their ongoing ParkNow app project released into the app store in 3 month time.
+For Progris (Web & Mobile applications) I advised and motivated a small 3
+person team to redesign a Mobile CRM application into a clean, consistent and
+flexible app that could be used as the base for their next generation mobile
+app projects (Scrum, Xamarin).
+For the Media Asset Management solution of AxleVideo (Boston USA) I
+created
+a full search solution that delivered the needed speed and easy of use for their
+customers within the bounds of their existing implementation.
+In addition a media archive solution was delivered.
+(Architecture, Design & Implementation (OSX, iOS, Postgres, Objective-c)).
+
+Loc4OR BV
+6 years 4 months
+
+Owner & Developing Architect
+2010 - January 2015 (5 years)
+
+The below projects enabled me to full-fill my passion to create elegantly simple
+solutions with teams sharing the determination.
+For Mivon (small ERP software company) and Prima-IB (Interior Consultants)
+as first customer the analysis and development of a generic sales & purchase
+
+intake iPad App interfacing to specific backend systems (UI development,
+Xcode Objective-c/Swift and CouchDB NoSql client database with on demand
+server sync).
+The initial version is now in production at Prima-IB (integrated with the Mivon
+ERP backend).
+To satisfy the requested functionality of new customers we are currently
+designing the next release (using the CQRS + ES pattern to handle
+collaboration, staleness and reproducibility together with some of the unique
+concepts used in the Mivon ERP backend).
+Development is in cooperation with a Tsjech based development team (using
+Scrum) handling the back-end interfacing context.
+For Kramp (International 1300 employee wholesale company) the
+development of a customer document handling system.
+The task was to create,archive and send (web, e-mail, postal, fax & with
+goods) the customer document output of their best of breed systems to all
+customers (using C#, PRISM, Oracle PL/SQL and BizTalk). With a Scrum
+team in a dynamic and legacy rich environment I was able to deliver stable, in
+functionality increasing versions into production.
+
+Owner & Developing Architect
+
+2009 - 2010 (1 year)
+Acm Fleetforce Putten Netherlands
+For Acm Fleetforce (leased cars management company) the support (advice,
+development & implementation) of a custom made ERP/CRM system (Asp.net
+and WinForms, C#, MSSql).
+This after a management buyout without software support from the original
+owners.
+After analysing the complete situation we decided to invest in increasing the
+efficiency by replacing the car intake paper based flow with a simple and
+flexible apple iPod application (I created the iPod data entry client using
+Objective-c and Asp.Net C#, MS-Sql, SOAP WebServices on the server).
+After demo of the first release the project was stopped due to financial
+constraints of Acm.
+
+Owner & Developing Architect
+October 2008 - 2010 (2 years)
+
+For DQOC analysing existing Welding robot solution and reengineering the
+software in current context. With a small team we upgraded the legacy solution
+into the new context
+(Linux Eclipse realtime C++ code analysing and reengineering for a welding
+robot).
+For Deno software the integration of their legal document management system
+with the central register repository. I Designed a Word template solution and a
+program to merge these templates with the data from the Deno application and
+send it to a SOAP web service (C#, XSD parsing, Word XDoc XML parsing).
+For DutchWorld and Arbo-Unie analysing user problem context for planning of
+physical exams.
+Advice and prototyping for a web front end for planners on top of Intersystems
+object database. Cache with Intersystems Ensemble as enterprise bus and
+Centric OpenCare:ARBO back office.
+(Use-cases, HTML, Javascript, Cache server pages (CSP), Cache Object
+Script (COS))
+Creation of a Planning software Demo in cooperation with Mivon.
+Taking several concepts a step further to create a very flexible, fast and easy
+to implement planning environment together with the location concepts already
+in place from previous developments.
+(C#, JavaScript, Silverlight, Html, Xml, MS-Sql, CouchDb)
+For Mivon maintenance and support of CoDE ERP software.
+Work together with Mivon to solve several performance issues by suggesting
+and implementing several new concepts. (Delphi, MS-Sql).
+
+Mivon BV
+Co-Owner Architect Developer
+2006 - December 2008 (2 years)
+
+Together with a small team (total of 3 developers and 3 project consultants)
+creating an ERP application for production and trade companies (mainly small
+to large furniture production project companies and wood related trading
+companies)
+- Architect Developer adding new concepts to the existing application based on
+customer and consultant feedback to:
+-- Enable consultants to match the customers world to the application world.
+
+-- Enable customers to think about the system as they think about the real
+world.
+-- Resulting in user response ‘its like the real world’.
+- The complete new functionality is live and the customer is seeing the system
+as one of its main way’s to survive.
+(Delphi, MS-SQL plus a Domain specific language and framework to model the
+customers world).
+
+DiMS! organizing print
+16 years
+
+VP R&D
+
+1999 - 2006 (7 years)
+Responsible for the research and development environment.
+- Supporting sales by communicating with technical decision makers at small
+to large corporate companies (Netherlands, Germany, Austria, UK, US and
+Australia).
+Research to prototyping with customers, sales and consultants to determine
+the way for new developments.
+Introduces several concepts supporting the DiSM! platform in selling the
+application.
+
+Manager/Architect/Developer
+1990 - 2006 (16 years)
+
+During my career at DiMS! we grew from a 10 employees local company to a
+110 employees international company having the largest printer in the US and
+Australia as customer of our ERP application for the printing industry.
+More details in the below positions.
+
+Architect Developer
+
+1990 - 2006 (16 years)
+- To
+Enabling DiMS! to sell the application to large accounts I made in close
+cooperation with end users Enterprise Planning, Calculation and Printing press
+interface functionality, resulting in satisfied users getting control over the total
+multi site production environment.
+
+- Created a modular working environment with revision control and release
+management context for development and maintenance, enabling customers
+to have a controlled upgrade environment.
+- Created a domain specific language as a layer above the database tables
+to enable consistent customer reporting and data access while still enabling
+database changes.
+- Added layers for UI, Business and Database. Enabling the UI to go from
+Character terminals to X-Terminals to PC’s with VB6 front-end to Web and
+database support for informix, Ingress and Oracle.
+- Introduced Object oriented programming to the complete team.
+- Merged several project into one version as the product to use for all current
+and as the base for future customers.
+
+Manager Consultant System Support Help Desk
+1997 - 1999 (2 years)
+
+Responsible for supporting Application, System and DB Software (DiMS!,
+Unix(Digital, HP, IBM) Windows, Informix DB2 Ingress Oracle), Hardware (HP,
+IBM) and networking (Cisco) environment.
+Improved customer satisfaction by improving internal communication and
+improving testing work flow, resulting in less issues and faster help desk
+responses.
+
+Manager Development
+1991 - 1997 (6 years)
+
+Management of a team of developers (growing to a team of 15 persons)
+combined with Architecting the technical environment.
+Introduced small teams with modular functionality responsibility and
+maintained a very positive working environment.
+
+ICT Novotech
+Software Developer
+1985 - 1990 (5 years)
+
+- Developer Animal food factory control application (Zuthen, Lochem).
+Based on DM90 expertise and PLC team expertise we created a complete
+system to control the factory.
+(Small team, E-pascal, Hardware interfacing, Realtime Digital VAX VMS,
+PDP11, PLC)
+
+- Developer DM90: industrial communication and data acquisition product
+based on Real-time VAX.
+With the DM90 team we created the initial concepts to make a diverse factory
+IO context available as one consistent context available for backend and
+control use.
+(Small team, Large factory plants, E-Pascal, networking, PLC interfacing)
+- Developer Digital VAX VMS Driver for Glass-fiber network card.
+Delivered complete implementation together with Gerard Sanderink as project
+leader from specification to tested of a VAX VMS Driver needed to control a
+Windmill park.
+(Complex technical project, VAX Assembly)
+- Developer of a Test framework for ASML lithography.
+As team member I delivered and tested several software modules to test parts
+of a Wafer Stepper.
+(Large team, State of art technical environment, Clean room, C)
+
+ASML
+Test Framework developer
+
+1985 - 1985 (less than a year)
+As software developer i delivered part of a test framework for wafer steppers.
+
+Jonker
+Software Developer
+1984 - 1985 (1 year)
+
+Architect Developer of a new Window UI for character terminals.
+From concept to implementation of a new window UI framework for character
+terminals.
+( C, Realtime OS pSOS)
+
+Pierik Accountancy
+Software Developer
+1982 - 1983 (1 year)
+
+Architect Developer of a bookkeeping system that enables bookkeepers to
+quickly turn the customers shoebox into a correct administration enabling the
+accountant to make the financial reporting.
+(Commodore Basic, 2 year partnership with the accountant to turn his ideas
+into a unique way to get farmers shoebox administration available as annual
+
+accounts book (data typist blind typing using num.keypad only resulted in an
+increase of customers with labor decrease).
+
+Electronicahuis Radio Nijhuis
+Computer Sales & Support
+1979 - 1982 (3 years)
+
+Par-time sales and support of commodore and apple computers in an
+electronics shop in Enschede.
+Hardware (repairs) en software support before the first IBM PC’s appeared.
+
+Education
+Saxion Hogescholen
+ing, Computer Technology · (1980 - 1984)
+
+The internet
+Software architecture and development · (1980 - 2016)
+
+Van Stiphout Training
+Management · (1995 - 2001)
+
+High School, MTS
+MTS Electronics, Building Computers (electronics, Software) · (1977 - 1980)

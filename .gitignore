@@ -1,0 +1,23 @@
+# Python environment
+.venv/
+__pycache__/
+*.pyc
+
+# uv / mise local overrides
+.mise.local.toml
+
+# Generated job shortlists (hand-written reports are kept)
+reports/jobs-*.md
+reports/jobs-*.jsonl
+
+# Persistent job catalog (local discovery state, rebuilt by fetches)
+data/
+
+# Transient UI→agent command requests (ADR-0008); drained outside the UI
+queue/
+
+# macOS
+.DS_Store
+
+# Personal working data. This public tree ships the toolchain and profile only.
+applications/

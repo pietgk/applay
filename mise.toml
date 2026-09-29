@@ -1,0 +1,98 @@
+[tools]
+python = "3.12"
+uv = "latest"
+
+[env]
+# Keep mise and uv pointing at the same in-project virtualenv.
+UV_PROJECT_ENVIRONMENT = ".venv"
+# WeasyPrint loads its native libs (pango/cairo/gobject) via dlopen; Homebrew's
+# lib dir isn't on the default macOS search path, so point dyld at it.
+DYLD_FALLBACK_LIBRARY_PATH = "/opt/homebrew/lib"
+
+[tasks.install]
+description = "Install/sync dependencies into .venv"
+run = "uv sync"
+
+[tasks.new]
+description = "Scaffold a dated application folder: mise run new \"Company\" --role \"...\""
+run = "uv run python tools/new_application.py"
+
+[tasks.lint-ats]
+description = "Score a cv.md draft against its job.md: mise run lint-ats job.md cv.md"
+run = "uv run python tools/ats_lint.py"
+
+[tasks.render]
+description = "Render cv.md to a 1-page PDF: mise run render path/to/cv.md"
+# mise runs tasks via /bin/sh (SIP-protected), which strips DYLD_* from [env];
+# re-set it inline here so WeasyPrint can dlopen Homebrew's pango/cairo/gobject.
+run = "DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run python tools/render_cv.py"
+
+[tasks.cv-start]
+description = "Initialize cv-analysis.md and cv-draft.md: mise run cv-start -- applications/<folder>"
+run = "uv run python tools/cv_workflow.py start"
+
+[tasks.cv-create]
+description = "Import/scaffold a job and initialize its CV workflow"
+run = "uv run python tools/cv_workflow.py create"
+
+[tasks.cv-check]
+description = "Run CV draft gates and render cv-draft.pdf: mise run cv-check -- applications/<folder>"
+run = "DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run python tools/cv_workflow.py check"
+
+[tasks.cv-finalize]
+description = "Promote a passing CV draft: mise run cv-finalize -- --approve applications/<folder>"
+run = "DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run python tools/cv_workflow.py finalize"
+
+[tasks.cv-approve]
+description = "Check and approve a passing CV draft: mise run cv-approve -- applications/<folder>"
+run = "DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run python tools/cv_workflow.py approve"
+
+[tasks.ui]
+description = "Run the private local CV application UI on localhost"
+run = "DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run python tools/local_ui.py"
+
+[tasks.jobs]
+description = "Fetch ranked job shortlist from public ATS boards"
+run = "uv run python tools/jobs_fetch.py"
+
+[tasks.ingest]
+description = "Ingest a clipboard job description into the catalog (macOS)"
+run = "uv run python tools/jobs_ingest.py"
+
+[tasks.drafts-todo]
+description = "List applications whose CV draft needs (re)generating (read-only)"
+run = "uv run python tools/drafts_todo.py"
+
+[tasks.applied]
+description = "Record a submitted application: mise run applied -- applications/<folder>"
+run = "uv run python tools/mark_applied.py"
+
+[tasks.skills-check]
+description = "Validate apply skills and their Codex discovery links"
+run = "uv run python tools/validate_skills.py"
+
+[tasks.lint]
+description = "Lint Python sources with ruff"
+run = "uv run ruff check ."
+
+[tasks.check]
+description = "Type-check Python sources with basedpyright (same engine Zed uses)"
+run = "uv run basedpyright src tools"
+
+[tasks.fmt]
+description = "Format Python sources with ruff"
+run = "uv run ruff format ."
+
+[tasks.fmt-check]
+description = "Check Python formatting without changing files"
+run = "uv run ruff format --check ."
+
+[tasks.test]
+description = "Run offline regression tests"
+# mise runs tasks through /bin/sh, which strips DYLD_* on macOS; restore it so
+# the rendering tests can import WeasyPrint's Homebrew libraries.
+run = "DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run python -m unittest discover -s tests -p 'test_*.py' -v"
+
+[tasks.verify]
+description = "Run skill validation, formatting, lint, type-check, and offline tests"
+run = "mise run skills-check && mise run fmt-check && mise run lint && mise run check && mise run test"

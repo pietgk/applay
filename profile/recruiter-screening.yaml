@@ -1,0 +1,53 @@
+# Standing answers for consultancy screening questionnaires.
+# Fill a reply from this file. Ask Piet before sending when a value is empty,
+# or when assignment dates, client, or salary should differ for that role.
+# Standing screening answers. Role-specific drafts stay in the private working repo.
+
+full_name: Piet Groot Kormelink
+email: piet.groot.kormelink@gmail.com
+current_location: Röfors, Sweden
+remote: true
+timezone: CET
+
+work_permit_required_for_sweden: no
+visa_status: Valid Swedish work permit
+
+full_time_40h_per_week: yes
+earliest_start_after_signing: within a few days
+expected_gross_monthly_salary: 70000 SEK
+
+# Default yes. Reconfirm when the client or the contract window changes.
+comfortable_with_consultancy_employing_and_assigning_to_client: yes
+
+cv_accuracy:
+  confirm_before_send: true
+  note: >
+    AI may improve language and structure. Claims come from
+    profile/master-profile.yaml. He confirms the CV matches his own experience
+    before it is sent. IoT and connected devices may be answered Yes from
+    industrial and device work. Do not claim AMQP, gRPC, HusqIoT product work,
+    Kubernetes, EKS, or production Java or Go unless the
+    profile gains those proof points. MongoDB Atlas and AWS RDS were both
+    in production at Mindler.
+
+gdpr:
+  share_cv_with_client_for_this_role: yes
+  store_profile_for_future_opportunities: yes
+
+motivation_shape:
+  - Lead with the stack this assignment actually is, in his words: TypeScript, Node.js, event-driven services, AWS, APIs, CI/CD, operations.
+  - One Mindler proof: about 20 services, event-driven AWS including DLQ on-call, release cadence from monthly to several a week.
+  - One earlier backend proof: TechBuddy CQRS-ES, or the Nationale-Nederlanden Node.js and Lambda GraphQL MVP.
+  - Industrial and connected-device overlap when the assignment is industrial: education in electronics and hardware, ICT Novotech factory control, Jonker on pSOS, and the Adler salt-spreader app done by Loc4OR together with Nowark Rengelink. He answers that row Yes. Do not add AMQP, gRPC, or HusqIoT product experience.
+  - Close by confirming the CV is his own experience and that AI was used for language, not for invented skills.
+
+matrix:
+  column_b_means: Whether Piet meets the competency. Yes or No. Do not mark a tool he has not shipped as Yes.
+  honest_no:
+    - Production Java or Go
+  yes_with_a_limit_in_the_note:
+    - MongoDB Atlas and AWS RDS, both in production at Mindler.
+    - IoT and connected devices, from industrial control and the Adler salt-spreader app. Not AMQP, gRPC, or a HusqIoT product.
+    - Containerization, from Mindler Fargate and local containers, TechBuddy Cloud Run, and vivief containers and virtual machines. Kubernetes and EKS are not platforms he has operated.
+    - SQL data design (PostgreSQL, MySQL, MS-SQL, Oracle) on the database-design row
+    - Go spikes at TechBuddy, stated as an evaluation, on the Java/Go row

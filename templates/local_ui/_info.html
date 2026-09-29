@@ -1,0 +1,27 @@
+{% macro popover(control_id, intent, label, narrative=none) -%}
+  <span class="info-control">
+    <button
+      type="button"
+      class="info-trigger"
+      aria-label="Info about {{ label }}"
+      aria-controls="{{ control_id }}"
+      aria-expanded="false"
+      data-info-trigger
+    >ℹ</button>
+    <span
+      id="{{ control_id }}"
+      class="info-popover"
+      role="dialog"
+      aria-label="{{ label }} Info"
+      data-info-popover
+      hidden
+    >
+      {% if narrative %}<span class="info-narrative">{{ narrative }}</span>{% endif %}
+      <span class="info-part"><strong>What</strong>{{ intent.what }}</span>
+      <span class="info-part"><strong>Why</strong>{{ intent.why }}</span>
+      <span class="info-part"><strong>How</strong>{{ intent.how }}</span>
+      <span class="info-ref">Ref: {{ intent.ref }}</span>
+      {% if caller is defined %}{{ caller() }}{% endif %}
+    </span>
+  </span>
+{%- endmacro %}

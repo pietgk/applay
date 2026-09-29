@@ -1,0 +1,57 @@
+{#
+  The shared 70vw two-pane shell: a list/rail column (~40%) and a detail column
+  (~60%), server-rendered on the ordinary Jinja base.
+
+  A screen adopts it with `{% extends "two_pane.html" %}` and fills the blocks -
+  it never repeats the layout markup. Blocks, outermost first:
+
+    page_title      <title> (from base.html)
+    shell_eyebrow   small kicker above the heading
+    shell_title     <h1>
+    shell_title_info contextual Info beside the <h1>
+    shell_meta      right-hand line of the page heading
+    shell_notices   notices between heading and panes
+    shell_body      escape hatch: replace both panes (e.g. a full-width empty state)
+    rail_label      accessible name of the left column
+    rail            left column content (rail rows; see _shell.html macros)
+    detail_label    accessible name of the right column
+    detail          right column content
+
+  Rendered with no overrides it is a valid empty shell, so it can be demoed
+  standalone (see the /shell route).
+#}
+{% extends "base.html" %}
+
+{% block page_class %}page page-shell{% endblock %}
+
+{% block content %}
+  <div class="page-heading">
+    <div>
+      {% set eyebrow %}{% block shell_eyebrow %}{% endblock %}{% endset %}
+      {% if eyebrow.strip() %}<p class="eyebrow">{{ eyebrow }}</p>{% endif %}
+      <div class="heading-with-info">
+        <h1>{% block shell_title %}Two-pane shell{% endblock %}</h1>
+        {% block shell_title_info %}{% endblock %}
+      </div>
+    </div>
+    <p class="muted">{% block shell_meta %}{% endblock %}</p>
+  </div>
+
+  {% block shell_notices %}{% endblock %}
+
+  {% block shell_body %}
+    <div class="two-pane">
+      <section class="card pane pane-rail" aria-label="{% block rail_label %}List{% endblock %}">
+        {% block rail %}
+          <p class="pane-empty">Nothing to list yet.</p>
+        {% endblock %}
+      </section>
+
+      <section class="card pane pane-detail" aria-label="{% block detail_label %}Detail{% endblock %}">
+        {% block detail %}
+          <p class="pane-empty">Select an item on the left to read it here.</p>
+        {% endblock %}
+      </section>
+    </div>
+  {% endblock %}
+{% endblock %}

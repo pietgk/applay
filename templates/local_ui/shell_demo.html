@@ -1,0 +1,40 @@
+{#
+  Standalone demo of the shared two-pane shell (route: /shell).
+
+  It carries no screen behaviour and reads no workspace files - it exists so the
+  shell can be looked at, and so the fragment/PRG place-keeping is demonstrable:
+  clicking a row reloads the page and the row is scrolled back into view.
+#}
+{% extends "two_pane.html" %}
+{% import "_shell.html" as shell %}
+
+{% block title %}Shell · two-pane layout{% endblock %}
+{% block shell_eyebrow %}Shared chrome{% endblock %}
+{% block shell_title %}Two-pane shell{% endblock %}
+{% block shell_meta %}{{ items|length }} example rows · rail 40% / detail 60%{% endblock %}
+
+{% block rail_label %}Example rows{% endblock %}
+{% block rail %}
+  {{ shell.rail_group("Example", items|length) }}
+  {% for item in items %}
+    {% set anchor = anchor_id("demo", item.key) %}
+    {% call shell.rail_item(anchor, url_for("shell_demo", item=item.key), selected=item.key == selected.key) %}
+      <span class="rail-lead">{{ loop.index }}</span>
+      <div>
+        <div class="rail-title">{{ item.title }}</div>
+        <div class="rail-sub">{{ item.caption }}</div>
+      </div>
+    {% endcall %}
+  {% endfor %}
+{% endblock %}
+
+{% block detail_label %}Example detail{% endblock %}
+{% block detail %}
+  <div class="pane-head">
+    <div>
+      <h2>{{ selected.title }}</h2>
+      <p class="muted">{{ selected.caption }}</p>
+    </div>
+  </div>
+  <p class="explanation">{{ selected.body }}</p>
+{% endblock %}

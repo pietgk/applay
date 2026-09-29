@@ -1,0 +1,275 @@
+{% extends "two_pane.html" %}
+{% import "_shell.html" as shell %}
+{% import "_info.html" as info %}
+
+{% block title %}Jobs · catalog triage{% endblock %}
+{% block shell_eyebrow %}Discovery → catalog{% endblock %}
+{% block shell_title %}Jobs{% endblock %}
+{% block shell_title_info %}{{ info.popover("jobs-screen-info", screen_intent.elements["screen"], "Jobs screen", screen_intent.narrative_html) }}{% endblock %}
+{% block shell_meta %}
+  {% if watermark %}Last fetch {{ watermark[:16].replace('T', ' ') }} · {% endif %}
+  {{ job_count }} job{% if job_count != 1 %}s{% endif %}
+{% endblock %}
+
+{% block shell_notices %}
+  {% if error %}<div class="notice error">{{ error }}</div>{% endif %}
+  <form class="job-filters card" method="get" action="{{ url_for('jobs_index') }}">
+    <div class="job-filters-heading">
+      <span>Feed controls</span>
+      {{ info.popover("jobs-filters-info", screen_intent.elements["filters"], "Jobs filters") }}
+    </div>
+    <fieldset class="filter-group filter-angles">
+      <legend>Angles</legend>
+      <div class="filter-options">
+        {% for angle in angle_options %}
+          <label>
+            <input
+              type="checkbox"
+              name="angle"
+              value="{{ angle }}"
+              {% if angle in filters.angles %}checked{% endif %}
+            >
+            {{ angle|replace('_', ' ') }}
+          </label>
+        {% endfor %}
+        {% if not angle_options %}<span class="muted">No angles yet</span>{% endif %}
+      </div>
+    </fieldset>
+    <label class="filter-select">
+      <span>Minimum fit</span>
+      <select name="min_fit">
+        {% for fit in min_fit_options %}
+          <option value="{{ fit }}" {% if fit == filters.min_fit %}selected{% endif %}>
+            {{ fit }}+
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+    <fieldset class="filter-group">
+      <legend>Triage</legend>
+      <input type="hidden" name="triage_submitted" value="1">
+      <div class="filter-options">
+        {% for bucket in triage_options %}
+          <label>
+            <input
+              type="checkbox"
+              name="triage"
+              value="{{ bucket }}"
+              {% if bucket in filters.triage %}checked{% endif %}
+            >
+            {{ bucket|capitalize }}
+          </label>
+        {% endfor %}
+      </div>
+    </fieldset>
+    <label class="filter-select">
+      <span>Sort by</span>
+      <select name="sort">
+        {% for sort in sort_options %}
+          <option value="{{ sort }}" {% if sort == filters.sort %}selected{% endif %}>
+            {{ sort|capitalize }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+    <div class="filter-actions">
+      <button type="submit">Apply</button>
+      <a class="filter-reset" href="{{ url_for('jobs_index') }}">Reset</a>
+    </div>
+  </form>
+  <form method="post" action="{{ url_for('enqueue_jobs_command', **filter_query) }}" class="queue-enqueue">
+    <input type="hidden" name="type" value="fetch-jobs">
+    <button type="submit">Fetch jobs</button>
+  </form>
+{% endblock %}
+
+{% block shell_body %}
+  {% if not selected %}
+    {% if feed_empty_reason == 'no-catalog' %}
+      <div class="empty-state">
+        <p>No catalog jobs yet. Fetch jobs to populate the feed.</p>
+        <form method="post" action="{{ url_for('enqueue_jobs_command', **filter_query) }}">
+          <input type="hidden" name="type" value="fetch-jobs">
+          <button type="submit">Fetch jobs</button>
+        </form>
+      </div>
+    {% elif feed_empty_reason == 'all-stale' %}
+      <div class="empty-state">
+        <p>Every catalog job has gone stale. Fetch jobs to refresh the feed.</p>
+        <form method="post" action="{{ url_for('enqueue_jobs_command', **filter_query) }}">
+          <input type="hidden" name="type" value="fetch-jobs">
+          <button type="submit">Fetch jobs</button>
+        </form>
+      </div>
+    {% else %}
+      <div class="empty-state">No jobs match these filters. Try widening the feed.</div>
+    {% endif %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block rail_label %}Catalog jobs{% endblock %}
+{% block rail %}
+  <div class="pane-context-heading">
+    <strong>Ranked feed</strong>
+    {{ info.popover("jobs-feed-info", screen_intent.elements["feed"], "ranked Jobs feed") }}
+  </div>
+  {% for item in feed %}
+    {% set job = item.record %}
+    {% call shell.rail_item(
+         anchor_id("job", job.job_id),
+         url_for("jobs_detail", job_id=job.job_id, **filter_query),
+         selected=job.job_id == selected_job_id,
+         attrs={"data-job-id": job.job_id, "data-triage": item.triage_bucket},
+       ) %}
+      <span class="rail-lead fit f{{ job.cluster_fit_score|int }}">{{ job.cluster_fit_score }}</span>
+      <div class="job-card-copy">
+        <div class="job-card-topline">
+          <span class="angle">{{ job.angle|replace('_', ' ') }}</span>
+          {% if item.triage_bucket in ('interested', 'skipped') %}
+            <span class="badge-triage badge-triage-{{ item.triage_bucket }}">
+              {{ item.triage_bucket }}
+            </span>
+          {% endif %}
+          {% if item.is_new %}<span class="badge-new">new</span>{% endif %}
+          {% if item.is_updated %}<span class="badge-upd">updated</span>{% endif %}
+          {% if item.is_closing_soon and item.days_left is not none %}
+            <span class="badge-closing">closes in {{ item.days_left }}d</span>
+          {% endif %}
+        </div>
+        <div class="rail-title">{{ job.title }}</div>
+        <div class="rail-sub">{{ job.company }} · {{ job.location }}</div>
+        {% if item.blurb %}<p class="job-card-blurb">{{ item.blurb }}</p>{% endif %}
+        {% if job.hits %}
+          <div class="chips job-card-cues">
+            {% for cue in job.hits %}
+              <span class="chip cue">{{ cue }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endcall %}
+  {% else %}
+    <p class="pane-empty">No jobs match these filters.</p>
+  {% endfor %}
+{% endblock %}
+
+{% block detail_label %}Job detail{% endblock %}
+{% block detail %}
+  {% set job = selected.record %}
+  <div class="pane-head">
+    <div>
+      <span class="angle">{{ job.angle|replace('_', ' ') }}</span>
+      {% if selected.is_new %}<span class="badge-new">new</span>{% endif %}
+      {% if selected.is_updated %}<span class="badge-upd">updated</span>{% endif %}
+      {% if selected.is_closing_soon and selected.days_left is not none %}
+        <span class="badge-closing">closes in {{ selected.days_left }}d</span>
+      {% endif %}
+      <div class="heading-with-info compact-heading">
+        <h2>{{ job.title }}</h2>
+        {{ info.popover("jobs-detail-info", screen_intent.elements["detail"], "selected job detail") }}
+      </div>
+      <div class="muted">{{ job.company }} · {{ job.location }}</div>
+    </div>
+    <span class="fit f{{ job.fit_score|int }} fit-lg">{{ job.fit_score }}</span>
+  </div>
+
+  <dl class="kv">
+    <dt>Fit rationale</dt>
+    <dd>{{ selected.fit_breakdown_line }}</dd>
+    {% if selected.attrs_line %}
+      <dt>Attrs</dt>
+      <dd>{{ selected.attrs_line }}</dd>
+    {% endif %}
+    {% if job.posted %}
+      <dt>Posted</dt>
+      <dd>{{ job.posted }}</dd>
+    {% endif %}
+    {% if job.deadline %}
+      <dt>Deadline</dt>
+      <dd>
+        {{ job.deadline }}
+        {% if selected.is_closing_soon and selected.days_left is not none %}
+          (in {{ selected.days_left }}d)
+        {% endif %}
+      </dd>
+    {% endif %}
+    <dt>First seen</dt>
+    <dd>{{ job.first_seen }}</dd>
+    <dt>Last seen</dt>
+    <dd>{{ job.last_seen }}</dd>
+    {% if job.source_queries %}
+      <dt>Found by</dt>
+      <dd>{{ job.source_queries|join(', ') }}</dd>
+    {% endif %}
+  </dl>
+
+  {% if job.hits %}
+    <div class="chips">
+      {% for cue in job.hits %}
+        <span class="chip cue">{{ cue }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if selected.description_long %}
+    <div class="desc" id="job-desc-short">{{ selected.description_preview }}…</div>
+    <div class="desc" id="job-desc-full" hidden>{{ selected.description }}</div>
+    <button type="button" class="ghost" id="desc-toggle">See more</button>
+  {% else %}
+    <div class="desc">{{ selected.description }}</div>
+  {% endif %}
+
+  <div class="stickybar">
+    {% if job.triage == 'applied' %}
+      <span class="tag-int">✓ scaffolded</span>
+      {% if job.application %}
+        <a class="ghost-link" href="{{ url_for('view_application', identifier=job.application) }}">
+          Open application
+        </a>
+      {% endif %}
+    {% elif job.triage == 'skipped' %}
+      <span class="tag-skip">skipped</span>
+      <small>{{ job.skip_reason }}</small>
+    {% else %}
+      <form method="post" action="{{ url_for('jobs_interested', job_id=job.job_id, **filter_query) }}">
+        <button type="submit" class="good">Interested → scaffold application</button>
+      </form>
+      {% if job.triage in ('open', 'interested') %}
+        <form class="skip-form" method="post" action="{{ url_for('jobs_skip', job_id=job.job_id, **filter_query) }}">
+          <input
+            type="text"
+            name="reason"
+            placeholder="Skip reason (persists so it never resurfaces as new)…"
+            required
+          >
+          <button type="submit" class="ghost warn">Skip</button>
+        </form>
+      {% endif %}
+    {% endif %}
+    {% if selected.posting_url %}
+      <a class="ghost-link" href="{{ selected.posting_url }}" target="_blank" rel="noopener">
+        Open posting ↗
+      </a>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    (function () {
+      var toggle = document.getElementById("desc-toggle");
+      if (!toggle) return;
+      var shortEl = document.getElementById("job-desc-short");
+      var fullEl = document.getElementById("job-desc-full");
+      var open = false;
+      toggle.addEventListener("click", function () {
+        open = !open;
+        shortEl.hidden = open;
+        fullEl.hidden = !open;
+        toggle.textContent = open ? "See less" : "See more";
+      });
+    })();
+  </script>
+{% endblock %}

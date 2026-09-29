@@ -1,0 +1,67 @@
+# Filtering & ranking policy for jobs_fetch.py.
+# Principle: tri-state. Hard filters drop ONLY on an explicit "fail".
+# "unknown" (attribute not stated) is always kept and flagged, never dropped.
+#
+# Per Piet's choices:
+#   - only location/timezone is a hard filter
+#   - employment (permanent > contract), work arrangement (remote > fewer office
+#     days > onsite) and pay are SOFT ranking signals
+
+hard:
+  # Onsite/hybrid roles pass only if in Sweden or the EU. Remote roles pass
+  # unless explicitly restricted to a non-CET region (e.g. "US only").
+  sweden_terms: [sweden, sverige, stockholm, göteborg, gothenburg, malmö, malmo,
+                 uppsala, lund, örebro, orebro, röfors, rofors, linköping]
+  eu_terms: [europe, european, eu, emea, nordic, nordics, cet, cest,
+             netherlands, amsterdam, rotterdam, utrecht, germany, berlin, munich,
+             hamburg, france, paris, spain, madrid, barcelona, portugal, lisbon, porto,
+             ireland, dublin, denmark, copenhagen, norway, oslo, finland, helsinki,
+             poland, warsaw, kraków, krakow, belgium, brussels, austria, vienna,
+             italy, milan, rome, switzerland, zurich, estonia, tallinn, lithuania,
+             latvia, czech, prague, romania, bucharest, greece, athens, united kingdom,
+             london, uk, england, scotland]
+  # Terms that signal a role is bound to a non-CET (typically US) timezone.
+  deny_timezone_terms: ["us only", "u.s. only", "united states only", "us-only",
+                        "must be based in the us", "must reside in the us",
+                        "must be located in the united states", "authorized to work in the us",
+                        "eastern time", "pacific time", "central time zone",
+                        "est time zone", "pst", "pdt", "americas only",
+                        "north america only", "remote - us", "remote (us",
+                        "remote, us", "us-based only"]
+  # Used to detect a US location for onsite/hybrid roles.
+  us_terms: ["united states", "usa", "u.s.a", ", ca ", ", ca,", ", ny", ", tx", ", wa",
+             ", ma", ", il", ", co", "new york", "san francisco", "los angeles",
+             "seattle", "austin", "boston", "chicago", "denver", "atlanta"]
+
+weights:
+  keyword_title: 3          # (kept for parity; keyword score added separately)
+  keyword_body: 1
+  employment_permanent: 3
+  employment_contract: 1
+  employment_unknown: 1
+  remote_full: 5
+  hybrid_base: 3
+  hybrid_per_office_day: -1  # each required office day lowers the rank
+  onsite: -1
+  arrangement_unknown: 1
+  region_sweden: 2
+  region_eu: 2
+  region_global_remote: 1
+  pay_meets_floor: 3
+  pay_below_floor: -2        # soft penalty, not a drop
+  # Recency lives inside the attribute score only; capped below remote/region.
+  recency_within_7d: 2
+  recency_within_30d: 1
+
+# Soft pay floors. Set your real numbers; leave 0 to ignore that period.
+# Comparison only happens when a posting states pay in a matching currency+period.
+pay:
+  accepted_currencies: [EUR, "€", SEK, kr, GBP, "£"]
+  min_hourly: 0
+  min_day: 0
+  min_annual: 0
+
+# Clipboard ingest (mise run ingest). Floor is a hard reject; missing
+# posting-ish words only warn.
+ingest:
+  min_chars: 200

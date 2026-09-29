@@ -1,0 +1,29 @@
+{
+  "total": {"value": 2},
+  "hits": [
+    {
+      "id": "29000001",
+      "headline": "Senior Backend Engineer (Node)",
+      "employer": {"workplace": "Nordic Charge AB", "name": "Nordic Charge AB"},
+      "workplace_address": {"city": "Stockholm", "region": "Stockholms län", "country": "Sverige"},
+      "application_details": {"url": "https://jobs.nordiccharge.example/senior-backend"},
+      "webpage_url": "https://arbetsformedlingen.se/platsbanken/annonser/29000001",
+      "employment_type": {"label": "Vanlig anställning"},
+      "duration": {"label": "Tills vidare"},
+      "publication_date": "2026-07-15T08:00:00",
+      "description": {"text": "Build Node.js and GraphQL services with PostgreSQL.\r\n\r\nTypeScript across the stack. Hybrid, 2 days in office. Permanent role in Stockholm, Sweden."}
+    },
+    {
+      "id": "29000002",
+      "headline": "Staff Engineer — Platform",
+      "employer": {"workplace": "US Platform Inc", "name": "US Platform Inc"},
+      "workplace_address": {"city": "New York", "country": "United States"},
+      "application_details": {"url": "https://jobs.usplatform.example/staff-engineer"},
+      "webpage_url": "https://arbetsformedlingen.se/platsbanken/annonser/29000002",
+      "employment_type": {"label": "Vanlig anställning"},
+      "duration": {"label": "Tills vidare"},
+      "publication_date": "2026-07-14T08:00:00",
+      "description": {"text": "Backend platform work. Onsite in our New York office, United States."}
+    }
+  ]
+}

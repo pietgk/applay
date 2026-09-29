@@ -1,0 +1,129 @@
+# ============================================================================
+# DISCOVERY — cross-company keyword search. No company names needed; this is the
+# primary way to FIND roles. Each search hits an aggregator that indexes many
+# employers at once.
+#   jobtech = Sweden's public Platsbanken API (jobsearch.api.jobtechdev.se) —
+#             free, no key, structured (employment type, region, apply URL).
+#   remotive = remotive.com remote-jobs API — free, no key; two category pulls
+#              per fetch (~2 req/day, under their ~4/day guidance). No query
+#              fan-out. Remotive job URL is canonical; apply URL left empty.
+#   hn = Hacker News "Who is Hiring" via Algolia HN Search — free, no key.
+#        Finds the newest monthly thread each fetch (optional thread_id pins
+#        one). Top-level comments only; deterministic company/title extract.
+# Add one search per keyword angle. `remote: true` restricts to remote ads.
+# Queries mirror profile/positioning.md's five angles (+ RN as preferred expertise).
+# ============================================================================
+searches:
+  # HN Who's Hiring — newest monthly thread (optional thread_id override)
+  - { source: hn }
+  # Remotive — remote-first software + AI pools (same admission gates as JobTech)
+  - { source: remotive, category: software-dev }
+  - { source: remotive, category: artificial-intelligence }
+  # 1. Full-Stack Tech Lead
+  - { source: jobtech, q: "tech lead fullstack", limit: 60 }
+  - { source: jobtech, q: "head of engineering", limit: 40 }
+  - { source: jobtech, q: "CTO", limit: 40 }
+  # 2. Product / Conversion Engineer
+  - { source: jobtech, q: "product engineer", limit: 60 }
+  - { source: jobtech, q: "growth engineer", limit: 40 }
+  # 3. Backend / Principal
+  - { source: jobtech, q: "backend engineer", limit: 60 }
+  - { source: jobtech, q: "staff engineer", limit: 40 }
+  - { source: jobtech, q: "principal engineer", limit: 40 }
+  # 4. Mobile Product (React Native) — preferred expertise
+  - { source: jobtech, q: "react native", limit: 60 }
+  - { source: jobtech, q: "react native lead", limit: 40 }
+  - { source: jobtech, q: "expo", limit: 40 }
+  # 5. AI-Native Engineer
+  - { source: jobtech, q: "AI engineer", limit: 60 }
+  - { source: jobtech, q: "LLM", limit: 40 }
+  # Broad TS/Node pool (feeds angles 1–3)
+  - { source: jobtech, q: "typescript developer", limit: 80 }
+  - { source: jobtech, q: "node graphql", limit: 60 }
+
+# ============================================================================
+# WATCHLIST (optional) — specific companies you want to track closely, straight
+# from their ATS board. Find the token from the board URL:
+#   Greenhouse : boards.greenhouse.io/<TOKEN>   -> source: greenhouse
+#   Lever      : jobs.lever.co/<TOKEN>          -> source: lever
+#   Ashby      : jobs.ashbyhq.com/<TOKEN>       -> source: ashby
+# Leave empty to rely purely on discovery. Examples:
+# ============================================================================
+boards: []
+  # - { source: ashby, token: ramp, company: "Ramp" }
+  # - { source: greenhouse, token: gitlab, company: "GitLab" }
+  # - { source: lever, token: spotify, company: "Spotify" }
+
+# ============================================================================
+# ANGLE CUES — deterministic primary-angle classification + weak-floor gate.
+# An angle qualifies with ≥1 title cue or ≥2 distinct body cues. Postings with
+# no qualifying angle are dropped before the catalog. Attribute filtering
+# (remote/employment/region/pay) lives in tools/preferences.yaml.
+# Mirrors profile/positioning.md; edit freely — no LLM at fetch time.
+# ============================================================================
+angles:
+  full_stack_lead:
+    title:
+      - tech lead
+      - engineering lead
+      - head of engineering
+      - cto
+      - full-stack
+      - fullstack
+      - full stack
+    body:
+      - architecture
+      - mentor
+      - mentoring
+      - ci/cd
+      - end-to-end
+      - typescript
+      - react
+      - node
+  product_engineer:
+    title:
+      - product engineer
+      - growth engineer
+      - growth
+    body:
+      - conversion
+      - experimentation
+      - a/b
+      - funnel
+      - subscription
+      - seo
+  backend_principal:
+    title:
+      - backend
+      - staff engineer
+      - principal
+      - principal engineer
+    body:
+      - distributed
+      - event-driven
+      - graphql
+      - node
+      - postgres
+      - typescript
+      - high-availability
+      - fintech
+  mobile_product:
+    title:
+      - react native
+      - expo
+      - mobile
+    body:
+      - react native
+      - expo
+      - mobile
+  ai_native:
+    title:
+      - ai engineer
+      - ai-native
+      - llm
+    body:
+      - llm
+      - machine learning
+      - agentic
+      - mcp
+      - ai-native

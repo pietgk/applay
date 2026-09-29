@@ -1,0 +1,296 @@
+{% extends "two_pane.html" %}
+{% import "_shell.html" as shell %}
+{% import "_info.html" as info %}
+
+{% macro workflow_actions(summary, selected_key="", check_label="Run check") %}
+  <section class="actions event-workflow-actions" aria-label="Workflow actions">
+    <form method="post" action="{{ url_for('check_application', identifier=summary.identifier) }}">
+      <input type="hidden" name="selected_event" value="{{ selected_key }}">
+      <button type="submit">{{ check_label }}</button>
+    </form>
+    <form method="post" action="{{ url_for('enqueue_application_command', identifier=summary.identifier) }}">
+      <input type="hidden" name="selected_event" value="{{ selected_key }}">
+      <input type="hidden" name="type" value="refresh-draft">
+      <button type="submit">Refresh draft</button>
+    </form>
+    <form method="post" action="{{ url_for('enqueue_application_command', identifier=summary.identifier) }}">
+      <input type="hidden" name="selected_event" value="{{ selected_key }}">
+      <input type="hidden" name="type" value="capture-email">
+      <button type="submit">Capture email</button>
+    </form>
+    <form method="post" action="{{ url_for('approve_application', identifier=summary.identifier) }}" class="approval-form">
+      <input type="hidden" name="selected_event" value="{{ selected_key }}">
+      <label>
+        <input type="checkbox" name="confirm" value="approve" required>
+        I reviewed the claims and PDF
+      </label>
+      <button type="submit" class="approve">Approve and finalize</button>
+    </form>
+  </section>
+{% endmacro %}
+
+{% macro gate_results(check_result) %}
+  <h3>Latest gates</h3>
+  <div class="gates">
+    {% for gate in check_result.gates %}
+      <article class="gate {% if gate.passed %}passed{% else %}failed{% endif %}">
+        <div class="gate-heading">
+          <strong>{{ "PASS" if gate.passed else "FAIL" }}</strong>
+          <span>{{ gate.name }}</span>
+        </div>
+        <p>{{ gate.detail }}</p>
+        {% if gate.findings %}
+          <ul>{% for finding in gate.findings %}<li>{{ finding }}</li>{% endfor %}</ul>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% block title %}Application · {{ summary.company }}{% endblock %}
+{% block shell_eyebrow %}{{ summary.identifier }}{% endblock %}
+{% block shell_title %}Application{% endblock %}
+{% block shell_title_info %}{{ info.popover("application-screen-info", screen_intent.elements["screen"], "Application screen", screen_intent.narrative_html) }}{% endblock %}
+{% block shell_meta %}{{ timeline|length }} event{% if timeline|length != 1 %}s{% endif %}{% endblock %}
+
+{% block shell_notices %}
+  <p class="application-back"><a href="{{ url_for('index') }}">← All applications</a></p>
+  {% if message %}<div class="notice success">{{ message }}</div>{% endif %}
+  {% if error %}<div class="notice error">{{ error }}</div>{% endif %}
+
+  <section class="card application-job-card" aria-label="Application job card">
+    {{ info.popover("application-job-card-info", screen_intent.elements["job_card"], "application job card") }}
+    <span class="fit f{{ summary.fit_score|int }} fit-lg" aria-label="Fit {{ summary.fit_score }}">
+      {{ summary.fit_score }}
+    </span>
+    <div class="application-job-copy">
+      <div class="application-company">{{ summary.company }}</div>
+      <h2>{{ summary.role or "Role not recorded" }}</h2>
+      {% if summary.standing_summary %}
+        <p class="application-summary">{{ summary.standing_summary }}</p>
+      {% else %}
+        <p class="application-summary muted">No standing summary yet.</p>
+      {% endif %}
+    </div>
+    <div class="application-job-actions">
+      {% if summary.apply_url %}
+        <a class="ghost-link" href="{{ summary.apply_url }}" target="_blank" rel="noopener">
+          Apply ↗
+        </a>
+      {% endif %}
+      <form
+        class="status-form"
+        method="post"
+        action="{{ url_for('update_application_status', identifier=summary.identifier) }}"
+      >
+        <input type="hidden" name="selected_event" value="{{ selected.key if selected else '' }}">
+        <div class="label-with-info">
+          <label for="application-status">Status</label>
+          {{ info.popover("application-status-info", screen_intent.elements["status"], "application status") }}
+        </div>
+        <select id="application-status" name="status" onchange="this.form.requestSubmit()">
+          {% for option in status_options %}
+            <option
+              value="{{ option.value }}"
+              {% if option.value == summary.status %}selected{% endif %}
+              {% if option.natural %}data-natural="true"{% endif %}
+            >
+              {{ option.value|capitalize }}{% if option.natural %} · natural next{% endif %}
+            </option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+  </section>
+{% endblock %}
+
+{% block rail_label %}Application events{% endblock %}
+{% block rail %}
+  <div class="timeline-rail-heading">
+    <div>
+      <span class="eyebrow">History</span>
+      <div class="heading-with-info compact-heading">
+        <h2>Events</h2>
+        {{ info.popover("application-events-info", screen_intent.elements["events"], "Application events") }}
+      </div>
+    </div>
+    <span class="timeline-count">{{ timeline|length }}</span>
+  </div>
+  {% for item in timeline %}
+    {% call shell.rail_item(
+         anchor_id("event", item.key),
+         url_for("view_application", identifier=summary.identifier, event=item.key),
+         selected=selected and item.key == selected.key,
+         attrs={"data-timeline-key": item.key, "data-event-kind": item.kind},
+       ) %}
+      <span class="rail-lead">{{ item.lead }}</span>
+      <div class="timeline-row-copy">
+        <div class="rail-title">{{ item.title }}</div>
+        <div class="rail-sub">{{ item.subtitle }}</div>
+        <time datetime="{{ item.when }}">{{ item.when_label }}</time>
+      </div>
+    {% endcall %}
+  {% endfor %}
+{% endblock %}
+
+{% block detail_label %}Selected event detail{% endblock %}
+{% block detail %}
+  {% if not selected %}
+    <p class="pane-empty">No application events yet.</p>
+  {% else %}
+    <article class="event-detail" data-selected-event="{{ selected.key }}">
+      <div class="event-detail-heading">
+        <div>
+          <span class="eyebrow">{{ selected.subtitle }}</span>
+          <h2>{{ selected.title }}</h2>
+          <time datetime="{{ selected.when }}">{{ selected.when_label }}</time>
+        </div>
+        <div class="event-heading-actions">
+          {% if selected.field == "draft_started_at" %}
+            {% call info.popover("application-selected-event-info", screen_intent.elements[selected.info_key], "selected event") %}
+              <span class="info-extra"><code>cv-draft.md · v{{ summary.draft_iteration }}</code></span>
+              {% if draft_versions %}
+                <ul class="version-list">
+                  {% for version in draft_versions %}
+                    <li><strong>{{ version.identifier }}</strong> - draft {{ version.draft }}, PDF {{ version.pdf }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <span class="info-extra muted"><code>drafts/&lt;version&gt;/ · none</code></span>
+              {% endif %}
+            {% endcall %}
+          {% else %}
+            {{ info.popover("application-selected-event-info", screen_intent.elements[selected.info_key], "selected event") }}
+          {% endif %}
+          <span class="rail-lead event-lead">{{ selected.lead }}</span>
+        </div>
+      </div>
+
+      {% if selected.source == "event" %}
+        {% if selected.kind == "status_changed" %}
+          <dl class="kv event-kv">
+            <dt>From</dt><dd>{{ selected.event['from'] }}</dd>
+            <dt>To</dt><dd>{{ selected.event['to'] }}</dd>
+          </dl>
+        {% elif selected.kind == "email" %}
+          <dl class="kv event-kv">
+            <dt>Direction</dt><dd>{{ selected.event.direction }}</dd>
+            <dt>From</dt><dd>{{ selected.event['from'] }}</dd>
+            <dt>To</dt><dd>{{ selected.event['to'] }}</dd>
+            <dt>Subject</dt><dd>{{ selected.event.subject }}</dd>
+          </dl>
+          {% if event_payload %}<pre class="event-body">{{ event_payload }}</pre>{% endif %}
+        {% elif selected.kind == "link" %}
+          <p>
+            <a class="ghost-link" href="{{ selected.event.url }}" target="_blank" rel="noopener">
+              {{ selected.event.label }} ↗
+            </a>
+          </p>
+          {% if event_payload %}<pre class="event-body">{{ event_payload }}</pre>{% endif %}
+        {% elif selected.kind == "note" %}
+          <p class="event-note">{{ selected.event.text }}</p>
+        {% endif %}
+      {% elif selected.field == "date_fetched" %}
+        <pre class="event-body">{{ artifacts['job.md'] or "job.md is missing." }}</pre>
+      {% elif selected.field == "date_created" %}
+        <dl class="kv event-kv">
+          <dt>Company</dt><dd>{{ summary.company }}</dd>
+          <dt>Role</dt><dd>{{ summary.role }}</dd>
+          <dt>Fit</dt><dd>{{ summary.fit_score }}</dd>
+        </dl>
+      {% elif selected.field == "date_applied" %}
+      {% elif selected.field == "draft_started_at" %}
+        <section class="event-section">
+          <h3>Planning and evidence notes</h3>
+          <form method="post" action="{{ url_for('edit_artifact', identifier=summary.identifier, filename='cv-analysis.md') }}">
+            <input type="hidden" name="selected_event" value="{{ selected.key }}">
+            <textarea name="content" spellcheck="false">{{ artifacts['cv-analysis.md'] }}</textarea>
+            <button type="submit">Save cv-analysis.md</button>
+          </form>
+        </section>
+        <section class="event-section">
+          <h3>Human instructions for the next draft</h3>
+          <form method="post" action="{{ url_for('edit_artifact', identifier=summary.identifier, filename='cv-feedback.md') }}">
+            <input type="hidden" name="selected_event" value="{{ selected.key }}">
+            <textarea name="content" spellcheck="false">{{ artifacts['cv-feedback.md'] }}</textarea>
+            <button type="submit">Save cv-feedback.md</button>
+          </form>
+        </section>
+        <section class="event-section">
+          <h3>Generated candidate CV</h3>
+          <pre>{{ artifacts['cv-draft.md'] or "cv-draft.md is missing." }}</pre>
+        </section>
+        <section class="event-section alignment-panel">
+          <h3>Draft alignment</h3>
+          {% if alignment_findings %}
+            <h4>Analysis claim not found in draft</h4>
+            <ul>{% for finding in alignment_findings %}<li>{{ finding }}</li>{% endfor %}</ul>
+          {% else %}
+            <p class="notice success">No numeric analysis claims were detected as missing from cv-draft.md.</p>
+          {% endif %}
+          <div class="snapshot-status {{ final_snapshot.kind }}">
+            <strong>{{ final_snapshot.label }}</strong>
+            <span>{{ final_snapshot.detail }}</span>
+          </div>
+        </section>
+        {% if check_result %}
+          {{ gate_results(check_result) }}
+        {% endif %}
+        {{ workflow_actions(summary, selected.key) }}
+      {% elif selected.field == "last_checked_at" %}
+        {% if check_result %}
+          {{ gate_results(check_result) }}
+        {% else %}
+          <pre class="event-body">{{ artifacts['cv-review.md'] or "No saved check report." }}</pre>
+        {% endif %}
+        {{ workflow_actions(summary, selected.key, "Run check again") }}
+        {% if pdf_available['cv-draft.pdf'] %}
+          <a class="ghost-link" href="{{ url_for('pdf_artifact', identifier=summary.identifier, filename='cv-draft.pdf') }}" target="_blank">Open draft PDF ↗</a>
+        {% endif %}
+      {% elif selected.field == "finalized_at" %}
+        <pre class="event-body">{{ artifacts.get('cv.md', '') or "cv.md is missing." }}</pre>
+        {% if pdf_available['cv.pdf'] %}
+          <a class="ghost-link" href="{{ url_for('pdf_artifact', identifier=summary.identifier, filename='cv.pdf') }}" target="_blank">Open final PDF ↗</a>
+        {% endif %}
+      {% else %}
+        <section class="event-section"><h3>job.md</h3><pre>{{ artifacts['job.md'] or "(missing)" }}</pre></section>
+        <section class="event-section"><h3>meta.yaml</h3><pre>{{ artifacts['meta.yaml'] or "(missing)" }}</pre></section>
+        <section class="event-section">
+          <h3>Planning and evidence notes</h3>
+          <form method="post" action="{{ url_for('edit_artifact', identifier=summary.identifier, filename='cv-analysis.md') }}">
+            <input type="hidden" name="selected_event" value="{{ selected.key }}">
+            <textarea name="content" spellcheck="false">{{ artifacts['cv-analysis.md'] }}</textarea>
+            <button type="submit">Save cv-analysis.md</button>
+          </form>
+        </section>
+        <section class="event-section">
+          <h3>Human instructions for the next draft</h3>
+          <form method="post" action="{{ url_for('edit_artifact', identifier=summary.identifier, filename='cv-feedback.md') }}">
+            <input type="hidden" name="selected_event" value="{{ selected.key }}">
+            <textarea name="content" spellcheck="false">{{ artifacts['cv-feedback.md'] }}</textarea>
+            <button type="submit">Save cv-feedback.md</button>
+          </form>
+        </section>
+        <section class="event-section"><h3>Generated candidate CV · cv-draft.md</h3><pre>{{ artifacts['cv-draft.md'] or "(missing)" }}</pre></section>
+        <section class="event-section">
+          <h3>Generated check report · cv-review.md</h3>
+          {% if check_result %}
+            {{ gate_results(check_result) }}
+          {% else %}
+            <pre>{{ artifacts['cv-review.md'] or "(missing)" }}</pre>
+          {% endif %}
+        </section>
+        <section class="event-section">
+          <h3>PDF artifacts</h3>
+          {% if pdf_available['cv-draft.pdf'] %}
+            <a class="ghost-link" href="{{ url_for('pdf_artifact', identifier=summary.identifier, filename='cv-draft.pdf') }}" target="_blank">cv-draft.pdf ↗</a>
+          {% endif %}
+          {% if pdf_available['cv.pdf'] %}
+            <a class="ghost-link" href="{{ url_for('pdf_artifact', identifier=summary.identifier, filename='cv.pdf') }}" target="_blank">cv.pdf ↗</a>
+          {% endif %}
+        </section>
+        {{ workflow_actions(summary, selected.key) }}
+      {% endif %}
+    </article>
+  {% endif %}
+{% endblock %}

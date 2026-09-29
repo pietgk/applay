@@ -1,0 +1,26 @@
+{#
+  Shared chrome helpers for the 70vw two-pane shell.
+
+  Place-keeping is fragments + PRG anchors (see
+  docs/research/2026-07-22-jobs-list-refresh-scroll-options.md): every rail row
+  carries a stable id and links to its own `#anchor`, so a full-page navigation
+  scrolls the row back into view inside the nested rail scroller. Writes redirect
+  to the same anchored URL (PRG). No htmx, no client-side framework.
+
+  `attrs` is a mapping of extra HTML attributes (screen-specific data-* hooks).
+#}
+
+{% macro rail_group(label, count=none, attrs={}) -%}
+  <div class="rail-group"{{ attrs|xmlattr }}>
+    {{ label }}{% if count is not none %} · {{ count }}{% endif %}
+  </div>
+{%- endmacro %}
+
+{#
+  A rail row. `anchor` is the fragment id (build it with the `anchor_id` global);
+  `href` is the target URL without a fragment - the macro appends `#anchor` so the
+  row keeps its place across the reload.
+#}
+{% macro rail_item(anchor, href, selected=False, attrs={}) -%}
+  <a id="{{ anchor }}" class="rail-item{% if selected %} sel{% endif %}" href="{{ href }}#{{ anchor }}"{% if selected %} aria-current="true"{% endif %}{{ attrs|xmlattr }}>{{ caller() }}</a>
+{%- endmacro %}

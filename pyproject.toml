@@ -1,0 +1,44 @@
+[project]
+name = "apply"
+version = "0.1.0"
+description = "Structured pipeline for tailoring ATS-safe CVs and tracking job applications."
+requires-python = ">=3.12"
+dependencies = [
+    "flask",
+    "markdown",
+    "weasyprint",
+    "pyyaml",
+    "truststore",
+    "certifi",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.28,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "basedpyright",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# The formatter handles code wrapping; the remaining long lines are inline
+# string/data literals (HTML templates, YAML/JD scaffolds) not worth reflowing.
+ignore = ["E501"]
+
+# Point the type checker (and editors' Pyright language server) at the project
+# venv so third-party imports (markdown, weasyprint, yaml) resolve.
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+# "standard" is Pyright's recommended default. Declaring it here makes editors
+# (Zed, VS Code) match the CLI instead of silently using "strict", whose
+# reportUnknown* rules are noise for scripts that parse dynamically-typed JSON.
+typeCheckingMode = "standard"
+include = ["src", "tools"]

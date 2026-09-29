@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% import "_info.html" as info %}
+{% block title %}Applications · CV workflow{% endblock %}
+{% block content %}
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">Milestone 4</p>
+      <div class="heading-with-info">
+        <h1>Applications</h1>
+        {{ info.popover("applications-screen-info", screen_intent.elements["screen"], "Applications screen", screen_intent.narrative_html) }}
+      </div>
+    </div>
+    <p class="muted">File-backed, local-only workflow</p>
+  </div>
+
+  {% if applications %}
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <span class="label-with-info">Company {{ info.popover("applications-list-info", screen_intent.elements["application_list"], "application list") }}</span>
+            </th>
+            <th>Role</th>
+            <th><span class="label-with-info">Status {{ info.popover("applications-status-info", screen_intent.elements["status"], "application status") }}</span></th>
+            <th><span class="label-with-info">Workflow {{ info.popover("applications-workflow-info", screen_intent.elements["workflow"], "workflow state") }}</span></th>
+            <th><span class="label-with-info">Fit {{ info.popover("applications-fit-info", screen_intent.elements["fit"], "fit score") }}</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for application in applications %}
+            <tr>
+              <td>
+                <a href="{{ url_for('view_application', identifier=application.identifier) }}">
+                  {{ application.company }}
+                </a>
+                <small>{{ application.identifier }}</small>
+              </td>
+              <td>{{ application.role or "—" }}</td>
+              <td><span class="status">{{ application.status }}</span></td>
+              <td>{{ application.workflow_state }}</td>
+              <td>{{ application.fit_score }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty-state">No application folders were found.</div>
+  {% endif %}
+{% endblock %}

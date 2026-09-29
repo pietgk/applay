@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mark Application Applied"
+  short_description: "Record a submitted job application safely"
+  default_prompt: "Use $apply-mark-applied to record that I submitted a job application."

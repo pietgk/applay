@@ -1,0 +1,44 @@
+I'm Piet Groot Kormelink. Use this as my matching profile — not a single target title.
+
+Identity
+- Sweden (Röfors), valid work permit, remote / hybrid, CET
+- Contract / consulting or permanent
+- github.com/pietgk · linkedin.com/in/pietgrootkormelink · piet.groot.kormelink@gmail.com
+
+How to match me
+Do not collapse me into one job title. I am a fit for any of these five roles. Surface a startup if the posting maps to one of them with real proof on my side. Scheduling / ops is a wedge, not a sixth title.
+
+1. Full-Stack Tech Lead (default / strongest)
+   Proof: Mindler end-to-end ownership + release velocity; Nationale-Nederlanden GraphQL architect; Finner CTO.
+   Look for: lead, architecture, full-stack, mentor, CI/CD, own features end-to-end.
+
+2. Product / Conversion Engineer
+   Proof: web first-meeting booking 5% → 21%; marketing CMS CSAT 3 → 4.8; Stripe and in-app billing; A/B + Unleash feature flags.
+   Look for: growth/acquisition, experimentation, funnels, subscriptions, SEO.
+
+3. Backend / Principal (distributed, regulated)
+   Proof: architecture across ~20 services + actor model; DLQ incident response on event-driven AWS; open-banking GraphQL MVP; CQRS-ES.
+   Look for: principal/staff, event-driven, high-availability, fintech/health/insurance.
+
+4. Mobile Product (React Native)
+   Proof: Mindler RN + Expo CNG / EAS and App Store + Play Store; ParkNow iOS to store in ~3 months; 0-to-1 RN products.
+   Look for: React Native / Expo apps, consumer mobile, small teams.
+
+5. AI-Native Engineer
+   Proof: vivief/devAC MCP server (github.com/pietgk/vivief); Mindler Answers knowledge base; daily Claude Code / Cursor spec-driven work.
+   Look for: AI-forward teams, agentic workflows, dev-tooling, "AI-native".
+
+Wedge: scheduling, planning, logistics, operational efficiency
+   Proof: TechBuddy partner scheduling; Mivon ERP “everything is a location”; DiMS! planning/MIS. Add this when the domain is ops-heavy.
+
+Recent work (facts)
+- Mindler, Technical Lead / Senior Software Developer, Feb 2022 – May 2026 (left 21 May 2026). Live regulated healthtech, 500+ psychologists. React Native + Expo, Next.js, Node/TypeScript + GraphQL, PostgreSQL, AWS.
+- TechBuddy Senior Developer, 2021–2022. Klarna Senior Developer, 2020–2021 (bank/card, regulated fintech). NN Technical Architect freelance, 2020 (GraphQL open-banking MVP). Finner CTO, 2018–2019.
+- 30+ years end-to-end ownership; last decade TypeScript/Node startups and scale-ups. Also .NET/C#.
+
+Preferences
+- Happiest building technology with a positive purpose, in a great team, from architecture through production.
+- Open to high-growth startups (your network). Prefer roles where I stay hands-on while leading technically.
+- Do not present The Future Group as an employer — it was a consultants collective.
+
+When you intro me to a company, pick the one angle that matches that role and lead with its proof. Keep the other angles in my profile for future matches.

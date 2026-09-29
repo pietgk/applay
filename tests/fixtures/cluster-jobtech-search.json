@@ -1,0 +1,19 @@
+{
+  "total": {"value": 1},
+  "hits": [
+    {
+      "id": "77000001",
+      "headline": "Senior Backend Engineer",
+      "employer": {"workplace": "Nordic Labs AB", "name": "Nordic Labs AB"},
+      "workplace_address": {"city": "Stockholm", "region": "Stockholms län", "country": "Sverige"},
+      "application_details": {"url": "https://careers.nordiclabs.example/jobs/senior-backend"},
+      "webpage_url": "https://arbetsformedlingen.se/platsbanken/annonser/77000001",
+      "employment_type": {"label": "Vanlig anställning"},
+      "duration": {"label": "Tills vidare"},
+      "publication_date": "2026-07-15T08:00:00",
+      "description": {
+        "text": "Build Node.js and GraphQL services with TypeScript and PostgreSQL.\r\n\r\nPermanent hybrid role in Stockholm, Sweden. Architecture ownership, mentoring, and shipping reliable APIs. This JobTech listing body is intentionally the longest source-native description so it wins display-winner ranking on length alone. Extra JobTech-only detail follows: event-driven services, observability, on-call expectations, stakeholder communication, and a long runway of platform work that should outrank a shorter curated paste when ranking by description richness."
+      }
+    }
+  ]
+}

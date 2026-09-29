@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}CV applications{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='local_ui.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-nav">
+        <a href="{{ url_for('index') }}">Applications</a>
+        <a href="{{ url_for('jobs_index') }}">Jobs</a>
+      </nav>
+      <span>local workspace</span>
+    </header>
+    <main class="{% block page_class %}page{% endblock %}">
+      {% block content %}{% endblock %}
+    </main>
+    <script>
+      (function () {
+        var triggers = Array.prototype.slice.call(document.querySelectorAll("[data-info-trigger]"));
+
+        function close(trigger) {
+          var popover = document.getElementById(trigger.getAttribute("aria-controls"));
+          trigger.setAttribute("aria-expanded", "false");
+          if (popover) popover.hidden = true;
+        }
+
+        function closeAll(except) {
+          triggers.forEach(function (trigger) {
+            if (trigger !== except) close(trigger);
+          });
+        }
+
+        function position(trigger, popover) {
+          var gap = 8;
+          var edge = 12;
+          var triggerRect = trigger.getBoundingClientRect();
+          var popoverRect = popover.getBoundingClientRect();
+          var left = Math.min(triggerRect.left, window.innerWidth - popoverRect.width - edge);
+          var top = triggerRect.bottom + gap;
+          if (top + popoverRect.height > window.innerHeight - edge) {
+            top = Math.max(edge, triggerRect.top - popoverRect.height - gap);
+          }
+          popover.style.left = Math.max(edge, left) + "px";
+          popover.style.top = top + "px";
+        }
+
+        triggers.forEach(function (trigger) {
+          trigger.addEventListener("click", function () {
+            var opening = trigger.getAttribute("aria-expanded") !== "true";
+            closeAll(trigger);
+            trigger.setAttribute("aria-expanded", opening ? "true" : "false");
+            var popover = document.getElementById(trigger.getAttribute("aria-controls"));
+            if (popover) {
+              popover.hidden = !opening;
+              if (opening) position(trigger, popover);
+            }
+          });
+        });
+
+        document.addEventListener("click", function (event) {
+          if (!event.target.closest(".info-control")) closeAll();
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") closeAll();
+        });
+        window.addEventListener("resize", function () { closeAll(); });
+        window.addEventListener("scroll", function (event) {
+          var target = event.target;
+          if (target && typeof target.closest === "function" && target.closest(".info-popover")) {
+            return;
+          }
+          closeAll();
+        }, true);
+      })();
+    </script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
