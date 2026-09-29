@@ -14,7 +14,7 @@ visa_status: Valid Swedish work permit
 
 full_time_40h_per_week: yes
 earliest_start_after_signing: within a few days
-expected_gross_monthly_salary: 70000 SEK
+expected_gross_monthly_salary: "TBD SEK"
 
 # Default yes. Reconfirm when the client or the contract window changes.
 comfortable_with_consultancy_employing_and_assigning_to_client: yes
